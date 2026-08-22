@@ -18,6 +18,18 @@
 	</a>
 </div>
 
+{#if data.upcomingDates.length > 0}
+	<div class="mb-6 flex flex-wrap gap-3 rounded-lg border border-ctp-surface0 bg-ctp-mantle p-3">
+		<span class="text-sm font-medium text-ctp-subtext1">Upcoming:</span>
+		{#each data.upcomingDates as d (d.id)}
+			<a href="/projects/{d.project_id}" class="text-sm text-ctp-text hover:text-ctp-mauve">
+				<span class="text-ctp-peach">{d.date}</span> — {d.label}
+				<span class="text-ctp-subtext0">({d.project_title})</span>
+			</a>
+		{/each}
+	</div>
+{/if}
+
 <form method="GET" class="mb-6 flex flex-wrap gap-3">
 	<input
 		type="search"
