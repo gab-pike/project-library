@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+@import '@catppuccin/tailwindcss/mocha.css';
+
+@theme {
+	--font-sans:
+		ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+	min-height: 100vh;
+}

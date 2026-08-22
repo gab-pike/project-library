@@ -1,0 +1,18 @@
+services:
+  project-library:
+    image: project-library:latest
+    container_name: project-library
+    restart: unless-stopped
+    ports:
+      - '3015:3000'
+    volumes:
+      - /mnt/Storage/apps/project-library/data:/data
+    environment:
+      - TZ=America/Chicago
+      - MAX_UPLOAD_MB=500
+    mem_limit: 512m
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:3000/']
+      interval: 60s
+      timeout: 5s
+      retries: 3

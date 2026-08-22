@@ -1,0 +1,40 @@
+{
+  "name": "project-library",
+  "version": "1.0.0",
+  "description": "Personal project library — self-hosted SvelteKit app for tracking hobby/side projects across pause and resume cycles.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@catppuccin/tailwindcss": "^1.0.0",
+    "@sveltejs/adapter-node": "^5.2.0",
+    "@sveltejs/kit": "^2.15.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^22.10.0",
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.26",
+    "svelte": "^5.16.0",
+    "svelte-check": "^4.1.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.11.1",
+    "dompurify": "^3.4.14",
+    "dotenv": "^17.4.2",
+    "marked": "^18.0.10",
+    "sharp": "^0.35.3",
+    "uuid": "^11.0.5",
+    "zod": "^4.4.3"
+  }
+}
