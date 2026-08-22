@@ -1,8 +1,12 @@
 import type Database from 'better-sqlite3';
 import m001 from './001_init.sql?raw';
+import m002 from './002_seed_categories.sql?raw';
 
 // Add new migrations here as { version, name, sql } — never edit a shipped migration's sql.
-const migrations = [{ version: 1, name: '001_init', sql: m001 }];
+const migrations = [
+	{ version: 1, name: '001_init', sql: m001 },
+	{ version: 2, name: '002_seed_categories', sql: m002 }
+];
 
 export function runMigrations(db: Database.Database) {
 	db.exec(`

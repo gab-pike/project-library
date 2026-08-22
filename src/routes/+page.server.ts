@@ -1,12 +1,22 @@
-import db from '$lib/server/db';
+import { listCategories } from '$lib/server/repos/categories';
+import { listProjects } from '$lib/server/repos/projects';
+import { ProjectPriority, ProjectStatus } from '$lib/types';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = () => {
-	const counts = {
-		categories: (db.prepare('SELECT COUNT(*) AS n FROM categories').get() as { n: number }).n,
-		projects: (db.prepare('SELECT COUNT(*) AS n FROM projects').get() as { n: number }).n,
-		ideas: (db.prepare('SELECT COUNT(*) AS n FROM ideas').get() as { n: number }).n
-	};
+export const load: PageServerLoad = ({ url }) => {
+	const status = ProjectStatus.safeParse(url.searchParams.get('status')).data;
+	const priority = ProjectPriority.safeParse(url.searchParams.get('priority')).data;
+	const category_id = url.searchParams.get('category') ?? undefined;
+	const q = url.searchParams.get('q') ?? undefined;
 
-	return { counts };
+	return {
+		projects: listProjects({ status, priority, category_id, q }),
+		categories: listCategories(),
+		filters: {
+			status: status ?? '',
+			priority: priority ?? '',
+			category: category_id ?? '',
+			q: q ?? ''
+		}
+	};
 };
