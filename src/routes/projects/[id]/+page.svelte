@@ -31,12 +31,15 @@
 	let { data, form }: { data: PageProps['data']; form: any } = $props();
 	const values = $derived(form?.values ?? data.project);
 
-	const TABS = ['overview', 'tasks', 'dates', 'updates', 'notes', 'links'] as const;
+	const TABS = ['overview', 'tasks', 'dates', 'updates', 'notes', 'links', 'assets'] as const;
 	type Tab = (typeof TABS)[number];
 	let activeTab = $state<Tab>('overview');
 
 	let selectedNoteId = $state<string | null>(null);
 	const selectedNote = $derived(data.notes.find((n) => n.id === selectedNoteId) ?? data.notes[0]);
+
+	let lightboxAssetId = $state<string | null>(null);
+	const lightboxAsset = $derived(data.assets.find((a) => a.id === lightboxAssetId));
 
 	const groupedTasks = $derived.by(() => {
 		const groups = new Map<string, typeof data.tasks>();
@@ -444,4 +447,96 @@
 			{/each}
 		</ul>
 	{/each}
+{:else if activeTab === 'assets'}
+	<form
+		method="POST"
+		action="?/uploadAsset"
+		use:enhance
+		enctype="multipart/form-data"
+		class="mb-6 flex flex-wrap items-end gap-2"
+	>
+		<label class="flex flex-col gap-1">
+			<span class="text-sm text-ctp-subtext1">File</span>
+			<input type="file" name="file" required class="text-sm text-ctp-text" />
+		</label>
+		<input name="caption" placeholder="Caption (optional)" class="w-48 {inputClass}" />
+		<button type="submit" class="rounded-md bg-ctp-mauve px-3 py-2 text-sm font-medium text-ctp-base hover:opacity-90">
+			Upload
+		</button>
+	</form>
+	{#if form?.error?.file}<p class="mb-4 text-sm text-ctp-red">{form.error.file[0]}</p>{/if}
+
+	{#if data.assets.length === 0}
+		<p class="text-ctp-subtext1">No files yet.</p>
+	{:else}
+		<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+			{#each data.assets as asset (asset.id)}
+				{@const isImage = asset.mime?.startsWith('image/')}
+				{@const isCover = data.project.cover_asset_id === asset.id}
+				<div class="flex flex-col gap-1 rounded-md border p-2 {isCover ? 'border-ctp-mauve' : 'border-ctp-surface0'} bg-ctp-mantle">
+					{#if isImage && asset.thumb_path}
+						<button type="button" onclick={() => (lightboxAssetId = asset.id)} class="block">
+							<img
+								src="/api/assets/{asset.id}/thumb"
+								alt={asset.caption ?? asset.filename}
+								class="aspect-square w-full rounded object-cover"
+							/>
+						</button>
+					{:else}
+						<a
+							href="/api/assets/{asset.id}/file"
+							target="_blank"
+							rel="noreferrer"
+							class="flex aspect-square w-full flex-col items-center justify-center rounded bg-ctp-surface0 text-center text-xs text-ctp-subtext1"
+						>
+							<span class="text-2xl">📄</span>
+							<span class="mt-1 truncate px-1">{asset.filename}</span>
+						</a>
+					{/if}
+
+					<form method="POST" action="?/updateAssetCaption" use:enhance class="flex">
+						<input type="hidden" name="id" value={asset.id} />
+						<input
+							name="caption"
+							value={asset.caption ?? ''}
+							placeholder="Caption"
+							onchange={(e) => e.currentTarget.form?.requestSubmit()}
+							class="w-full rounded border border-ctp-surface0 bg-ctp-base px-1.5 py-0.5 text-xs text-ctp-text"
+						/>
+					</form>
+
+					<div class="flex items-center justify-between text-xs">
+						{#if isImage}
+							<form method="POST" action={isCover ? '?/unsetCover' : '?/setCover'} use:enhance>
+								<input type="hidden" name="id" value={asset.id} />
+								<button type="submit" class="text-ctp-subtext1 hover:text-ctp-text">
+									{isCover ? 'Unset cover' : 'Set as cover'}
+								</button>
+							</form>
+						{:else}
+							<span></span>
+						{/if}
+						<form method="POST" action="?/deleteAsset" use:enhance>
+							<input type="hidden" name="id" value={asset.id} />
+							<button type="submit" class="text-ctp-red hover:underline">Delete</button>
+						</form>
+					</div>
+				</div>
+			{/each}
+		</div>
+	{/if}
+
+	{#if lightboxAsset}
+		<button
+			type="button"
+			onclick={() => (lightboxAssetId = null)}
+			class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-6"
+		>
+			<img
+				src="/api/assets/{lightboxAsset.id}/file"
+				alt={lightboxAsset.caption ?? lightboxAsset.filename}
+				class="max-h-full max-w-full rounded-lg object-contain"
+			/>
+		</button>
+	{/if}
 {/if}

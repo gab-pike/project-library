@@ -227,3 +227,13 @@ export function duplicateProject(id: string, options: DuplicateOptions = {}): Pr
 
 	return copy;
 }
+
+export function setCoverAsset(id: string, assetId: string | null): Project | undefined {
+	if (!getProject(id)) return undefined;
+	db.prepare('UPDATE projects SET cover_asset_id = ?, updated_at = ? WHERE id = ?').run(
+		assetId,
+		new Date().toISOString(),
+		id
+	);
+	return getProject(id);
+}

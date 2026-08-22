@@ -10,6 +10,7 @@ services:
     environment:
       - TZ=America/Chicago
       - MAX_UPLOAD_MB=500
+      - BODY_SIZE_LIMIT=524288000 # bytes; adapter-node's own cap, must be >= MAX_UPLOAD_MB or uploads 413 before our code sees them
       - AUTH_PASSWORD_HASH=${AUTH_PASSWORD_HASH}
       - SESSION_SECRET=${SESSION_SECRET}
     mem_limit: 512m

@@ -10,7 +10,7 @@ RUN npm run build && npm prune --omit=dev
 # --- runtime stage ---
 FROM node:22-alpine
 RUN apk add --no-cache vips
-ENV NODE_ENV=production DATA_DIR=/data PORT=3000
+ENV NODE_ENV=production DATA_DIR=/data PORT=3000 BODY_SIZE_LIMIT=524288000
 WORKDIR /app
 COPY --from=build /app/build ./build
 COPY --from=build /app/node_modules ./node_modules

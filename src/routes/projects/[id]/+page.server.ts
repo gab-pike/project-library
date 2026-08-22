@@ -1,4 +1,5 @@
 import { error, fail, redirect } from '@sveltejs/kit';
+import { randomUUID } from 'crypto';
 import { listCategories } from '$lib/server/repos/categories';
 import {
 	archiveProject,
@@ -7,6 +8,7 @@ import {
 	getProject,
 	pauseProject,
 	resumeProject,
+	setCoverAsset,
 	updateProject
 } from '$lib/server/repos/projects';
 import { createNote, deleteNote, listNotes, updateNote } from '$lib/server/repos/notes';
@@ -14,6 +16,14 @@ import { createTask, deleteTask, listTasks, moveTask, setTaskDone, updateTask } 
 import { createUpdate, deleteUpdate, listUpdates } from '$lib/server/repos/updates';
 import { createDate, deleteDate, listDates, updateDate } from '$lib/server/repos/dates';
 import { createLink, deleteLink, listLinks, updateLink } from '$lib/server/repos/links';
+import {
+	createAsset,
+	deleteAssetAndClearCover,
+	getAsset,
+	listAssets,
+	updateAssetCaption
+} from '$lib/server/repos/assets';
+import { deleteUploadFiles, saveUpload, UploadError } from '$lib/server/assets';
 import {
 	CompleteInput,
 	DateCreateInput,
@@ -42,7 +52,8 @@ export const load: PageServerLoad = ({ params }) => {
 		tasks: listTasks(params.id),
 		updates: listUpdates(params.id),
 		dates: listDates(params.id),
-		links: listLinks(params.id)
+		links: listLinks(params.id),
+		assets: listAssets(params.id)
 	};
 };
 
@@ -199,5 +210,47 @@ export const actions: Actions = {
 	deleteLink: async ({ request }) => {
 		const data = await request.formData();
 		deleteLink(String(data.get('id') ?? ''));
+	},
+
+	uploadAsset: async ({ request, params }) => {
+		const data = await request.formData();
+		const file = data.get('file');
+		if (!(file instanceof File) || file.size === 0) {
+			return fail(400, { error: { file: ['Choose a file to upload'] } });
+		}
+		const caption = String(data.get('caption') ?? '') || null;
+
+		try {
+			const id = randomUUID();
+			const saved = await saveUpload(id, params.id, file);
+			createAsset(id, params.id, { ...saved, caption });
+		} catch (err) {
+			if (err instanceof UploadError) return fail(400, { error: { file: [err.message] } });
+			throw err;
+		}
+	},
+
+	updateAssetCaption: async ({ request }) => {
+		const data = await request.formData();
+		updateAssetCaption(String(data.get('id') ?? ''), String(data.get('caption') ?? '') || null);
+	},
+
+	deleteAsset: async ({ request }) => {
+		const data = await request.formData();
+		const id = String(data.get('id') ?? '');
+		const asset = getAsset(id);
+		if (asset) {
+			await deleteUploadFiles(asset.rel_path, asset.thumb_path);
+			deleteAssetAndClearCover(id);
+		}
+	},
+
+	setCover: async ({ request, params }) => {
+		const data = await request.formData();
+		setCoverAsset(params.id, String(data.get('id') ?? '') || null);
+	},
+
+	unsetCover: async ({ params }) => {
+		setCoverAsset(params.id, null);
 	}
 };
