@@ -4,6 +4,10 @@ config(); // Loads .env from project root
 
 import { redirect, type Handle } from '@sveltejs/kit';
 import { SESSION_COOKIE_NAME, verifySessionToken } from '$lib/server/auth';
+import { startScheduler } from '$lib/server/scheduler';
+
+// Module scope — runs once when the server process loads this file, not per-request.
+startScheduler();
 
 const PUBLIC_PATHS = new Set(['/login']);
 

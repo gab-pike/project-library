@@ -68,6 +68,11 @@ export function getProject(id: string): Project | undefined {
 	return db.prepare('SELECT * FROM projects WHERE id = ?').get(id) as Project | undefined;
 }
 
+// Every project regardless of status — used by export, which mirrors the whole library.
+export function listAllProjects(): Project[] {
+	return db.prepare('SELECT * FROM projects ORDER BY created_at').all() as Project[];
+}
+
 export interface ProjectInput {
 	title: string;
 	category_id?: string | null;

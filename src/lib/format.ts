@@ -18,3 +18,10 @@ export function relativeTime(iso: string): string {
 	}
 	return rtf.format(Math.round(seconds), 'second');
 }
+
+// Search snippets come from arbitrary user-entered text, so they're never rendered via {@html} —
+// this splits on the '**'-delimited highlight markers into plain segments Svelte can interpolate
+// safely (auto-escaped), with the odd-indexed segments wrapped in <mark> by the caller.
+export function splitSnippet(snippet: string): { text: string; hit: boolean }[] {
+	return snippet.split('**').map((text, i) => ({ text, hit: i % 2 === 1 }));
+}

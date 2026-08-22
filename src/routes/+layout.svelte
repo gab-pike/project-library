@@ -20,9 +20,16 @@
 				<a href="/" class="text-sm text-ctp-subtext1 hover:text-ctp-text">Library</a>
 				<a href="/ideas" class="text-sm text-ctp-subtext1 hover:text-ctp-text">Ideas</a>
 				<a href="/categories" class="text-sm text-ctp-subtext1 hover:text-ctp-text">Categories</a>
-				<button onclick={logout} class="ml-auto text-sm text-ctp-subtext1 hover:text-ctp-text">
-					Logout
-				</button>
+				<a href="/export" class="text-sm text-ctp-subtext1 hover:text-ctp-text">Export</a>
+				<form method="GET" action="/search" class="ml-auto flex items-center">
+					<input
+						type="search"
+						name="q"
+						placeholder="Search…"
+						class="w-40 rounded-md border border-ctp-surface0 bg-ctp-base px-2 py-1 text-sm text-ctp-text outline-none focus:border-ctp-mauve"
+					/>
+				</form>
+				<button onclick={logout} class="text-sm text-ctp-subtext1 hover:text-ctp-text">Logout</button>
 			</nav>
 		</header>
 	{/if}
