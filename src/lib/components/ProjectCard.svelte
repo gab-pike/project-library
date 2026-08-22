@@ -2,14 +2,14 @@
 	import type { Project } from '$lib/server/repos/projects';
 	import type { Category } from '$lib/server/repos/categories';
 	import { relativeTime } from '$lib/format';
-	import { categoryAccentClass, priorityClass, statusBadgeClass } from '$lib/accent';
+	import { categoryAccentClass, priorityClass, statusBadgeClass, statusBorderClass } from '$lib/accent';
 
 	let { project, category }: { project: Project; category: Category | undefined } = $props();
 </script>
 
 <a
 	href="/projects/{project.id}"
-	class="flex flex-col gap-2 rounded-lg border border-ctp-surface0 bg-ctp-mantle p-4 transition hover:border-ctp-mauve"
+	class="flex flex-col gap-2 rounded-lg border border-l-4 border-ctp-surface0 bg-ctp-mantle p-4 transition hover:border-ctp-mauve {statusBorderClass(project.status)}"
 >
 	<div class="flex items-start justify-between gap-2">
 		<h3 class="font-semibold text-ctp-text">{project.title}</h3>

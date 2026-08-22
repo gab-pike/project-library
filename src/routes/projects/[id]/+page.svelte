@@ -2,7 +2,29 @@
 	import { enhance } from '$app/forms';
 	import MarkdownView from '$lib/components/MarkdownView.svelte';
 	import { statusBadgeClass } from '$lib/accent';
+	import { relativeTime } from '$lib/format';
 	import type { PageProps } from './$types';
+
+	const SUMMARY_TEMPLATE = `## What it was
+
+
+## What was accomplished
+
+
+## Key decisions
+
+
+## Challenges
+
+
+## Useful resources
+
+
+## Lessons learned
+
+
+## Result
+`;
 
 	// `form` is typed as a union across all 18 named actions below, most of which return
 	// unrelated shapes — narrowing it precisely isn't worth the ceremony, so treat it loosely here.
@@ -49,6 +71,97 @@
 	<span class="rounded-full px-2 py-0.5 text-xs font-medium {statusBadgeClass(data.project.status)}">
 		{data.project.status}
 	</span>
+</div>
+
+{#if data.project.status === 'paused'}
+	<div class="mb-6 rounded-lg border border-ctp-peach/40 bg-ctp-peach/10 p-4">
+		<p class="mb-2 text-sm font-medium text-ctp-peach">
+			Paused {data.project.paused_at ? relativeTime(data.project.paused_at) : ''}
+		</p>
+		<dl class="mb-3 flex flex-col gap-1 text-sm">
+			{#if data.project.pause_last_done}
+				<div><dt class="inline text-ctp-subtext1">Last done:</dt> <dd class="inline text-ctp-text">{data.project.pause_last_done}</dd></div>
+			{/if}
+			{#if data.project.pause_working_on}
+				<div><dt class="inline text-ctp-subtext1">Was working on:</dt> <dd class="inline text-ctp-text">{data.project.pause_working_on}</dd></div>
+			{/if}
+			{#if data.project.pause_problems}
+				<div><dt class="inline text-ctp-subtext1">Open problems:</dt> <dd class="inline text-ctp-text">{data.project.pause_problems}</dd></div>
+			{/if}
+			{#if data.project.pause_next_steps}
+				<div><dt class="inline text-ctp-subtext1">Next steps:</dt> <dd class="inline text-ctp-text">{data.project.pause_next_steps}</dd></div>
+			{/if}
+		</dl>
+		<form method="POST" action="?/resume" use:enhance>
+			<button type="submit" class="rounded-md bg-ctp-peach px-3 py-1.5 text-sm font-medium text-ctp-base hover:opacity-90">
+				Resume project
+			</button>
+		</form>
+	</div>
+{/if}
+
+{#if data.project.status === 'completed' && data.project.summary}
+	<div class="mb-6 rounded-lg border border-ctp-lavender/40 bg-ctp-lavender/10 p-4">
+		<p class="mb-2 text-sm font-medium text-ctp-lavender">Project summary</p>
+		<MarkdownView source={data.project.summary} />
+	</div>
+{/if}
+
+<div class="mb-6 flex flex-wrap gap-2 text-sm">
+	{#if data.project.status !== 'paused' && data.project.status !== 'archived'}
+		<details>
+			<summary class="cursor-pointer list-none rounded-md border border-ctp-surface0 px-3 py-1.5 text-ctp-subtext1 hover:text-ctp-text">
+				Pause
+			</summary>
+			<form method="POST" action="?/pause" use:enhance class="mt-2 flex w-80 flex-col gap-2 rounded-md border border-ctp-surface0 bg-ctp-mantle p-3">
+				<textarea name="pause_last_done" rows="2" placeholder="What did you last accomplish?" class={inputClass}></textarea>
+				<textarea name="pause_working_on" rows="2" placeholder="What were you working on?" class={inputClass}></textarea>
+				<textarea name="pause_problems" rows="2" placeholder="Any open problems?" class={inputClass}></textarea>
+				<textarea name="pause_next_steps" rows="2" placeholder="Intended next steps?" class={inputClass}></textarea>
+				<button type="submit" class="self-start rounded-md bg-ctp-peach px-3 py-1.5 font-medium text-ctp-base hover:opacity-90">
+					Pause project
+				</button>
+			</form>
+		</details>
+	{/if}
+
+	{#if data.project.status !== 'archived'}
+		<details>
+			<summary class="cursor-pointer list-none rounded-md border border-ctp-surface0 px-3 py-1.5 text-ctp-subtext1 hover:text-ctp-text">
+				{data.project.status === 'completed' ? 'Edit summary' : 'Mark complete'}
+			</summary>
+			<form method="POST" action="?/complete" use:enhance class="mt-2 flex w-96 flex-col gap-2 rounded-md border border-ctp-surface0 bg-ctp-mantle p-3">
+				<textarea name="summary" rows="10" class={inputClass}>{data.project.summary ?? SUMMARY_TEMPLATE}</textarea>
+				<button type="submit" class="self-start rounded-md bg-ctp-green px-3 py-1.5 font-medium text-ctp-base hover:opacity-90">
+					Save summary
+				</button>
+			</form>
+		</details>
+	{/if}
+
+	<details>
+		<summary class="cursor-pointer list-none rounded-md border border-ctp-surface0 px-3 py-1.5 text-ctp-subtext1 hover:text-ctp-text">
+			Duplicate
+		</summary>
+		<form method="POST" action="?/duplicate" use:enhance class="mt-2 flex w-72 flex-col gap-2 rounded-md border border-ctp-surface0 bg-ctp-mantle p-3">
+			<input name="title" value="{data.project.title} (copy)" class={inputClass} />
+			<label class="flex items-center gap-2 text-ctp-text">
+				<input type="checkbox" name="includeNotes" value="true" checked class="accent-ctp-mauve" /> Notes
+			</label>
+			<label class="flex items-center gap-2 text-ctp-text">
+				<input type="checkbox" name="includeTasks" value="true" checked class="accent-ctp-mauve" /> Task lists (reset completion)
+			</label>
+			<label class="flex items-center gap-2 text-ctp-text">
+				<input type="checkbox" name="includeLinks" value="true" checked class="accent-ctp-mauve" /> Links
+			</label>
+			<label class="flex items-center gap-2 text-ctp-text">
+				<input type="checkbox" name="includeUpdates" value="true" class="accent-ctp-mauve" /> Updates
+			</label>
+			<button type="submit" class="self-start rounded-md bg-ctp-mauve px-3 py-1.5 font-medium text-ctp-base hover:opacity-90">
+				Create duplicate
+			</button>
+		</form>
+	</details>
 </div>
 
 <div class="mb-6 flex gap-1 border-b border-ctp-surface0">

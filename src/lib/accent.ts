@@ -28,6 +28,20 @@ export function statusBadgeClass(status: string): string {
 	return STATUS_BADGES[status] ?? STATUS_BADGES.archived;
 }
 
+const STATUS_BORDERS: Record<string, string> = {
+	idea: 'border-l-ctp-blue',
+	active: 'border-l-ctp-green',
+	paused: 'border-l-ctp-peach',
+	completed: 'border-l-ctp-lavender',
+	archived: 'border-l-ctp-overlay0'
+};
+
+// Paused projects are first-class, not buried — a colored left border keeps them
+// visually distinct in the library grid even at a glance, not just via the badge text.
+export function statusBorderClass(status: string): string {
+	return STATUS_BORDERS[status] ?? STATUS_BORDERS.archived;
+}
+
 const PRIORITY_BADGES: Record<string, string> = {
 	high: 'text-ctp-red',
 	medium: 'text-ctp-yellow',

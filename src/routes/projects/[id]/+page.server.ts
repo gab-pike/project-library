@@ -1,18 +1,29 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import { listCategories } from '$lib/server/repos/categories';
-import { archiveProject, getProject, updateProject } from '$lib/server/repos/projects';
+import {
+	archiveProject,
+	completeProject,
+	duplicateProject,
+	getProject,
+	pauseProject,
+	resumeProject,
+	updateProject
+} from '$lib/server/repos/projects';
 import { createNote, deleteNote, listNotes, updateNote } from '$lib/server/repos/notes';
 import { createTask, deleteTask, listTasks, moveTask, setTaskDone, updateTask } from '$lib/server/repos/tasks';
 import { createUpdate, deleteUpdate, listUpdates } from '$lib/server/repos/updates';
 import { createDate, deleteDate, listDates, updateDate } from '$lib/server/repos/dates';
 import { createLink, deleteLink, listLinks, updateLink } from '$lib/server/repos/links';
 import {
+	CompleteInput,
 	DateCreateInput,
 	DateUpdateInput,
+	DuplicateInput,
 	LinkCreateInput,
 	LinkUpdateInput,
 	NoteCreateInput,
 	NoteUpdateInput,
+	PauseInput,
 	ProjectUpdateInput,
 	TaskCreateInput,
 	TaskUpdateInput,
@@ -60,6 +71,36 @@ export const actions: Actions = {
 	archive: async ({ params }) => {
 		archiveProject(params.id);
 		redirect(303, '/');
+	},
+
+	pause: async ({ request, params }) => {
+		const parsed = PauseInput.safeParse(formToObject(await request.formData()));
+		if (!parsed.success) return fail(400, { error: parsed.error.flatten().fieldErrors });
+		pauseProject(params.id, parsed.data);
+	},
+
+	resume: async ({ params }) => {
+		resumeProject(params.id);
+	},
+
+	complete: async ({ request, params }) => {
+		const parsed = CompleteInput.safeParse(formToObject(await request.formData()));
+		if (!parsed.success) return fail(400, { error: parsed.error.flatten().fieldErrors });
+		completeProject(params.id, parsed.data.summary);
+	},
+
+	duplicate: async ({ request, params }) => {
+		const data = await request.formData();
+		const parsed = DuplicateInput.safeParse({
+			title: String(data.get('title') ?? ''),
+			includeNotes: data.get('includeNotes') === 'true',
+			includeTasks: data.get('includeTasks') === 'true',
+			includeLinks: data.get('includeLinks') === 'true',
+			includeUpdates: data.get('includeUpdates') === 'true'
+		});
+		if (!parsed.success) return fail(400, { error: parsed.error.flatten().fieldErrors });
+		const copy = duplicateProject(params.id, parsed.data);
+		if (copy) redirect(303, `/projects/${copy.id}`);
 	},
 
 	createNote: async ({ request, params }) => {

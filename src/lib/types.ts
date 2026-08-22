@@ -68,3 +68,22 @@ export const LinkCreateInput = z.object({
 	group_name: optionalText(100)
 });
 export const LinkUpdateInput = LinkCreateInput.partial();
+
+export const PauseInput = z.object({
+	pause_last_done: optionalText(5000),
+	pause_working_on: optionalText(5000),
+	pause_problems: optionalText(5000),
+	pause_next_steps: optionalText(5000)
+});
+
+export const CompleteInput = z.object({
+	summary: z.string().trim().min(1).max(20_000)
+});
+
+export const DuplicateInput = z.object({
+	title: optionalText(200),
+	includeNotes: z.boolean().optional(),
+	includeTasks: z.boolean().optional(),
+	includeLinks: z.boolean().optional(),
+	includeUpdates: z.boolean().optional()
+});
