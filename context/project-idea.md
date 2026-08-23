@@ -10,14 +10,14 @@ The problem is not necessarily starting projects or having too many interests. T
 
 When a project is set aside, much of its context is eventually lost:
 
-* What had already been accomplished?
-* What decisions were made, and why?
-* What resources or references were useful?
-* What still needed to be done?
-* What problems were encountered?
-* How was something configured or built?
-* What was the original vision for the project?
-* Where exactly did the project leave off?
+- What had already been accomplished?
+- What decisions were made, and why?
+- What resources or references were useful?
+- What still needed to be done?
+- What problems were encountered?
+- How was something configured or built?
+- What was the original vision for the project?
+- Where exactly did the project leave off?
 
 Returning to an old project can therefore feel less like continuing something and more like reconstructing it.
 
@@ -55,16 +55,16 @@ At the center of the application would be a personal **Project Library**.
 
 Projects could belong to customizable categories such as:
 
-* Software Development
-* Photography
-* Videography
-* Home Improvement
-* Landscaping & Gardening
-* Art
-* Making & Fabrication
-* Research
-* Personal Organization
-* or any other interest the user wants to create.
+- Software Development
+- Photography
+- Videography
+- Home Improvement
+- Landscaping & Gardening
+- Art
+- Making & Fabrication
+- Research
+- Personal Organization
+- or any other interest the user wants to create.
 
 The categories would not impose a particular workflow. Their purpose would simply be to make a large and diverse collection of projects easy to navigate.
 
@@ -108,22 +108,22 @@ Instead, each project could contain multiple individual notes or documents organ
 
 For example, a software project might contain separate notes for:
 
-* Research
-* UI ideas
-* Bugs
-* Docker configuration
-* Database questions
-* Things I learned
-* Future features
+- Research
+- UI ideas
+- Bugs
+- Docker configuration
+- Database questions
+- Things I learned
+- Future features
 
 A landscaping project might instead contain:
 
-* Plant research
-* Measurements
-* Soil notes
-* Materials
-* Design ideas
-* Seasonal observations
+- Plant research
+- Measurements
+- Soil notes
+- Materials
+- Design ideas
+- Seasonal observations
 
 The goal would be to make project knowledge easy to navigate rather than creating one enormous running document.
 
@@ -135,13 +135,13 @@ Useful websites, tutorials, products, documentation, inspiration, references, or
 
 Projects could also contain or reference files such as:
 
-* Images
-* Documents
-* PDFs
-* Videos
-* Design files
-* Screenshots
-* Reference material
+- Images
+- Documents
+- PDFs
+- Videos
+- Design files
+- Screenshots
+- Reference material
 
 Assets could potentially be uploaded directly or embedded/linked from external sources.
 
@@ -155,10 +155,10 @@ A user should be able to pause a project without losing their place.
 
 Before stepping away, they could record:
 
-* what they most recently accomplished,
-* what they were working on,
-* any unresolved problems,
-* and what they intended to do next.
+- what they most recently accomplished,
+- what they were working on,
+- any unresolved problems,
+- and what they intended to do next.
 
 When they eventually return, the application could make that information immediately visible.
 
@@ -212,13 +212,13 @@ When a project is finished, it would not simply disappear into an archive.
 
 Eventually, the application could help generate a **Project Summary** documenting:
 
-* what the project was,
-* what was accomplished,
-* important decisions,
-* major challenges,
-* useful resources,
-* lessons learned,
-* and the final result.
+- what the project was,
+- what was accomplished,
+- important decisions,
+- major challenges,
+- useful resources,
+- lessons learned,
+- and the final result.
 
 The completed project would become something the user could return to later as a reference.
 
