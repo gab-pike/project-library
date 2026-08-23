@@ -1,5 +1,8 @@
 import crypto from 'crypto';
-import { AUTH_PASSWORD_HASH, SESSION_SECRET } from '$env/static/private';
+import { env } from '$env/dynamic/private';
+
+const AUTH_PASSWORD_HASH = env.AUTH_PASSWORD_HASH ?? '';
+const SESSION_SECRET = env.SESSION_SECRET ?? '';
 
 export const SESSION_COOKIE_NAME = 'session';
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 30; // 30 days

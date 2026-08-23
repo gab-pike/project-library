@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { DATA_DIR } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { listAllProjects, type Project } from './repos/projects';
 import { listCategories } from './repos/categories';
 import { listNotes } from './repos/notes';
@@ -11,6 +11,7 @@ import { listLinks } from './repos/links';
 import { listAssets } from './repos/assets';
 import { ASSETS_DIR } from './assets';
 
+const DATA_DIR = env.DATA_DIR ?? './data';
 export const EXPORTS_DIR = path.join(DATA_DIR, 'exports');
 
 // Sortable, filesystem-safe timestamp for both export folder names and backup filenames.

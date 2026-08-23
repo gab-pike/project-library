@@ -1,9 +1,9 @@
 import fs from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
-import { DATA_DIR } from '$env/static/private';
 import { env } from '$env/dynamic/private';
 
+const DATA_DIR = env.DATA_DIR ?? './data';
 export const ASSETS_DIR = path.join(DATA_DIR, 'assets');
 
 const IMAGE_MIME = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif']);
