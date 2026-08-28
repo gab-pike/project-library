@@ -70,7 +70,7 @@
 </svelte:head>
 
 <div class="mb-6 flex items-center gap-3">
-	<h1 class="text-2xl font-semibold text-ctp-text">{data.project.title}</h1>
+	<h1 class="font-display text-2xl font-semibold text-ctp-text">{data.project.title}</h1>
 	<span class="rounded-full px-2 py-0.5 text-xs font-medium {statusBadgeClass(data.project.status)}">
 		{data.project.status}
 	</span>
@@ -96,7 +96,7 @@
 			{/if}
 		</dl>
 		<form method="POST" action="?/resume" use:enhance>
-			<button type="submit" class="rounded-md bg-ctp-peach px-3 py-1.5 text-sm font-medium text-ctp-base hover:opacity-90">
+			<button type="submit" class="rounded-md bg-ctp-peach px-3 py-1.5 text-sm font-medium text-ctp-crust hover:opacity-90">
 				Resume project
 			</button>
 		</form>
@@ -121,7 +121,7 @@
 				<textarea name="pause_working_on" rows="2" placeholder="What were you working on?" class={inputClass}></textarea>
 				<textarea name="pause_problems" rows="2" placeholder="Any open problems?" class={inputClass}></textarea>
 				<textarea name="pause_next_steps" rows="2" placeholder="Intended next steps?" class={inputClass}></textarea>
-				<button type="submit" class="self-start rounded-md bg-ctp-peach px-3 py-1.5 font-medium text-ctp-base hover:opacity-90">
+				<button type="submit" class="self-start rounded-md bg-ctp-peach px-3 py-1.5 font-medium text-ctp-crust hover:opacity-90">
 					Pause project
 				</button>
 			</form>
@@ -135,7 +135,7 @@
 			</summary>
 			<form method="POST" action="?/complete" use:enhance class="mt-2 flex w-96 flex-col gap-2 rounded-md border border-ctp-surface0 bg-ctp-mantle p-3">
 				<textarea name="summary" rows="10" class={inputClass}>{data.project.summary ?? SUMMARY_TEMPLATE}</textarea>
-				<button type="submit" class="self-start rounded-md bg-ctp-green px-3 py-1.5 font-medium text-ctp-base hover:opacity-90">
+				<button type="submit" class="self-start rounded-md bg-ctp-green px-3 py-1.5 font-medium text-ctp-crust hover:opacity-90">
 					Save summary
 				</button>
 			</form>
@@ -160,7 +160,7 @@
 			<label class="flex items-center gap-2 text-ctp-text">
 				<input type="checkbox" name="includeUpdates" value="true" class="accent-ctp-mauve" /> Updates
 			</label>
-			<button type="submit" class="self-start rounded-md bg-ctp-mauve px-3 py-1.5 font-medium text-ctp-base hover:opacity-90">
+			<button type="submit" class="self-start rounded-md bg-ctp-mauve px-3 py-1.5 font-medium text-ctp-crust hover:opacity-90">
 				Create duplicate
 			</button>
 		</form>
@@ -234,7 +234,7 @@
 		{/if}
 
 		<div class="flex items-center gap-3">
-			<button type="submit" class="rounded-md bg-ctp-mauve px-4 py-2 font-medium text-ctp-base hover:opacity-90">
+			<button type="submit" class="rounded-md bg-ctp-mauve px-4 py-2 font-medium text-ctp-crust hover:opacity-90">
 				Save
 			</button>
 			{#if form?.saved}<span class="text-sm text-ctp-green">Saved.</span>{/if}
@@ -249,7 +249,7 @@
 		<input name="content" required placeholder="Add a task…" class="min-w-48 flex-1 {inputClass}" />
 		<input name="group_name" placeholder="Group (optional)" class="w-40 {inputClass}" />
 		<input type="date" name="due_date" class={inputClass} />
-		<button type="submit" class="rounded-md bg-ctp-mauve px-3 py-2 text-sm font-medium text-ctp-base hover:opacity-90">
+		<button type="submit" class="rounded-md bg-ctp-mauve px-3 py-2 text-sm font-medium text-ctp-crust hover:opacity-90">
 			Add
 		</button>
 	</form>
@@ -259,7 +259,7 @@
 	{/if}
 
 	{#each groupedTasks as [groupName, tasks] (groupName)}
-		<h3 class="mb-2 mt-4 text-sm font-semibold text-ctp-subtext1 first:mt-0">{groupName}</h3>
+		<h3 class="font-display mb-2 mt-4 text-sm font-semibold text-ctp-lavender first:mt-0">{groupName}</h3>
 		<ul class="flex flex-col gap-2">
 			{#each tasks as task (task.id)}
 				<li class="flex items-center gap-3 rounded-md border border-ctp-surface0 bg-ctp-mantle px-3 py-2">
@@ -278,7 +278,7 @@
 					<span class="flex-1 text-ctp-text {task.done ? 'text-ctp-overlay1 line-through' : ''}">
 						{task.content}
 					</span>
-					{#if task.due_date}<span class="text-xs text-ctp-peach">{task.due_date}</span>{/if}
+					{#if task.due_date}<span class="font-mono text-xs text-ctp-peach">{task.due_date}</span>{/if}
 					<form method="POST" action="?/moveTask" use:enhance>
 						<input type="hidden" name="id" value={task.id} />
 						<input type="hidden" name="direction" value="up" />
@@ -315,7 +315,7 @@
 				{/each}
 			</select>
 		</label>
-		<button type="submit" class="rounded-md bg-ctp-mauve px-3 py-2 text-sm font-medium text-ctp-base hover:opacity-90">
+		<button type="submit" class="rounded-md bg-ctp-mauve px-3 py-2 text-sm font-medium text-ctp-crust hover:opacity-90">
 			Add
 		</button>
 	</form>
@@ -326,7 +326,7 @@
 		<ul class="flex flex-col gap-2">
 			{#each data.dates as d (d.id)}
 				<li class="flex items-center gap-3 rounded-md border border-ctp-surface0 bg-ctp-mantle px-3 py-2">
-					<span class="w-28 shrink-0 text-sm text-ctp-peach">{d.date}</span>
+					<span class="font-mono w-28 shrink-0 text-sm text-ctp-peach">{d.date}</span>
 					<span class="flex-1 text-ctp-text">{d.label}</span>
 					<span class="text-xs text-ctp-subtext0">{d.kind}</span>
 					<form method="POST" action="?/deleteDate" use:enhance>
@@ -342,7 +342,7 @@
 		<textarea name="body" rows="3" required placeholder="What happened?" class={inputClass}></textarea>
 		<button
 			type="submit"
-			class="self-start rounded-md bg-ctp-mauve px-3 py-1.5 text-sm font-medium text-ctp-base hover:opacity-90"
+			class="self-start rounded-md bg-ctp-mauve px-3 py-1.5 text-sm font-medium text-ctp-crust hover:opacity-90"
 		>
 			Post update
 		</button>
@@ -355,7 +355,7 @@
 			{#each data.updates as u (u.id)}
 				<li class="rounded-md border border-ctp-surface0 bg-ctp-mantle p-4">
 					<div class="mb-2 flex items-center justify-between">
-						<span class="text-xs text-ctp-subtext0">{new Date(u.created_at).toLocaleString()}</span>
+						<span class="font-mono text-xs text-ctp-subtext0">{new Date(u.created_at).toLocaleString()}</span>
 						<form method="POST" action="?/deleteUpdate" use:enhance>
 							<input type="hidden" name="id" value={u.id} />
 							<button type="submit" class="text-xs text-ctp-red hover:underline">Delete</button>
@@ -403,7 +403,7 @@
 						</div>
 					</div>
 					<div class="flex items-center gap-3">
-						<button type="submit" class="rounded-md bg-ctp-mauve px-4 py-2 font-medium text-ctp-base hover:opacity-90">
+						<button type="submit" class="rounded-md bg-ctp-mauve px-4 py-2 font-medium text-ctp-crust hover:opacity-90">
 							Save note
 						</button>
 					</div>
@@ -422,7 +422,7 @@
 		<input name="url" required placeholder="https://…" class="min-w-48 flex-1 {inputClass}" />
 		<input name="title" placeholder="Title (optional)" class="w-40 {inputClass}" />
 		<input name="group_name" placeholder="Group (optional)" class="w-32 {inputClass}" />
-		<button type="submit" class="rounded-md bg-ctp-mauve px-3 py-2 text-sm font-medium text-ctp-base hover:opacity-90">
+		<button type="submit" class="rounded-md bg-ctp-mauve px-3 py-2 text-sm font-medium text-ctp-crust hover:opacity-90">
 			Add
 		</button>
 	</form>
@@ -432,7 +432,7 @@
 	{/if}
 
 	{#each groupedLinks as [groupName, links] (groupName)}
-		<h3 class="mb-2 mt-4 text-sm font-semibold text-ctp-subtext1 first:mt-0">{groupName}</h3>
+		<h3 class="font-display mb-2 mt-4 text-sm font-semibold text-ctp-lavender first:mt-0">{groupName}</h3>
 		<ul class="flex flex-col gap-2">
 			{#each links as link (link.id)}
 				<li class="flex items-center gap-3 rounded-md border border-ctp-surface0 bg-ctp-mantle px-3 py-2">
@@ -460,7 +460,7 @@
 			<input type="file" name="file" required class="text-sm text-ctp-text" />
 		</label>
 		<input name="caption" placeholder="Caption (optional)" class="w-48 {inputClass}" />
-		<button type="submit" class="rounded-md bg-ctp-mauve px-3 py-2 text-sm font-medium text-ctp-base hover:opacity-90">
+		<button type="submit" class="rounded-md bg-ctp-mauve px-3 py-2 text-sm font-medium text-ctp-crust hover:opacity-90">
 			Upload
 		</button>
 	</form>

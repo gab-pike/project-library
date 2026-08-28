@@ -20,7 +20,7 @@
 	{/if}
 
 	<div class="flex items-start justify-between gap-2">
-		<h3 class="font-semibold text-ctp-text">{project.title}</h3>
+		<h3 class="font-display font-semibold text-ctp-text">{project.title}</h3>
 		<span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium {statusBadgeClass(project.status)}">
 			{project.status}
 		</span>
@@ -37,7 +37,7 @@
 	{/if}
 
 	<div class="mt-1 flex items-center justify-between text-xs text-ctp-subtext0">
-		<span class="font-medium {priorityClass(project.priority)}">{project.priority} priority</span>
-		<span>{relativeTime(project.updated_at)}</span>
+		<span class="font-mono font-medium {priorityClass(project.priority)}">{project.priority} priority</span>
+		<span class="font-mono">{relativeTime(project.updated_at)}</span>
 	</div>
 </a>

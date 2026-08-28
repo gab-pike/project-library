@@ -9,7 +9,7 @@
 	<title>New project — Project Library</title>
 </svelte:head>
 
-<h1 class="mb-6 text-2xl font-semibold text-ctp-text">New project</h1>
+<h1 class="font-display mb-6 text-2xl font-semibold text-ctp-text">New project</h1>
 
 <form method="POST" use:enhance class="flex max-w-xl flex-col gap-4">
 	<label class="flex flex-col gap-1">
@@ -81,7 +81,7 @@
 
 	<button
 		type="submit"
-		class="self-start rounded-md bg-ctp-mauve px-4 py-2 font-medium text-ctp-base hover:opacity-90"
+		class="self-start rounded-md bg-ctp-mauve px-4 py-2 font-medium text-ctp-crust hover:opacity-90"
 	>
 		Create project
 	</button>

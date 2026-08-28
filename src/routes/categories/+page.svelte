@@ -9,7 +9,7 @@
 	<title>Categories — Project Library</title>
 </svelte:head>
 
-<h1 class="mb-6 text-2xl font-semibold text-ctp-text">Categories</h1>
+<h1 class="font-display mb-6 text-2xl font-semibold text-ctp-text">Categories</h1>
 
 <ul class="mb-8 flex max-w-md flex-col gap-2">
 	{#each data.categories as c (c.id)}
@@ -40,7 +40,7 @@
 			class="rounded-md border border-ctp-surface0 bg-ctp-mantle px-3 py-1.5 text-ctp-text"
 		/>
 	</label>
-	<button type="submit" class="rounded-md bg-ctp-mauve px-3 py-1.5 font-medium text-ctp-base hover:opacity-90">
+	<button type="submit" class="rounded-md bg-ctp-mauve px-3 py-1.5 font-medium text-ctp-crust hover:opacity-90">
 		Add
 	</button>
 </form>

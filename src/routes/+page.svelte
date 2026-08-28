@@ -12,8 +12,8 @@
 </svelte:head>
 
 <div class="mb-6 flex items-center justify-between gap-4">
-	<h1 class="text-2xl font-semibold text-ctp-text">Your Project Library</h1>
-	<a href="/projects/new" class="rounded-md bg-ctp-mauve px-3 py-2 text-sm font-medium text-ctp-base hover:opacity-90">
+	<h1 class="font-display text-2xl font-semibold text-ctp-text">Your Project Library</h1>
+	<a href="/projects/new" class="rounded-md bg-ctp-mauve px-3 py-2 text-sm font-medium text-ctp-crust hover:opacity-90">
 		+ New project
 	</a>
 </div>
@@ -23,7 +23,7 @@
 		<span class="text-sm font-medium text-ctp-subtext1">Upcoming:</span>
 		{#each data.upcomingDates as d (d.id)}
 			<a href="/projects/{d.project_id}" class="text-sm text-ctp-text hover:text-ctp-mauve">
-				<span class="text-ctp-peach">{d.date}</span> — {d.label}
+				<span class="font-mono text-ctp-peach">{d.date}</span> — {d.label}
 				<span class="text-ctp-subtext0">({d.project_title})</span>
 			</a>
 		{/each}

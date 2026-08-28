@@ -16,12 +16,14 @@ export function categoryAccentClass(color: string | null | undefined): string {
 	return (color && CATEGORY_ACCENTS[color]) || 'text-ctp-subtext1';
 }
 
+// Pike Labs badge pattern: 15%-opacity fill, 35%-opacity border of the same accent,
+// full-strength text, mono font — see brand guide §Components > Status badges.
 const STATUS_BADGES: Record<string, string> = {
-	idea: 'bg-ctp-blue/15 text-ctp-blue',
-	active: 'bg-ctp-green/15 text-ctp-green',
-	paused: 'bg-ctp-peach/15 text-ctp-peach',
-	completed: 'bg-ctp-lavender/15 text-ctp-lavender',
-	archived: 'bg-ctp-overlay0/15 text-ctp-overlay1'
+	idea: 'bg-ctp-blue/15 text-ctp-blue border border-ctp-blue/35 font-mono',
+	active: 'bg-ctp-green/15 text-ctp-green border border-ctp-green/35 font-mono',
+	paused: 'bg-ctp-peach/15 text-ctp-peach border border-ctp-peach/35 font-mono',
+	completed: 'bg-ctp-lavender/15 text-ctp-lavender border border-ctp-lavender/35 font-mono',
+	archived: 'bg-ctp-overlay0/15 text-ctp-overlay1 border border-ctp-overlay0/35 font-mono'
 };
 
 export function statusBadgeClass(status: string): string {

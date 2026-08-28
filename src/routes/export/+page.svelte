@@ -9,7 +9,7 @@
 	<title>Export & Backups — Project Library</title>
 </svelte:head>
 
-<h1 class="mb-2 text-2xl font-semibold text-ctp-text">Export &amp; backups</h1>
+<h1 class="font-display mb-2 text-2xl font-semibold text-ctp-text">Export &amp; backups</h1>
 <p class="mb-6 max-w-xl text-sm text-ctp-subtext1">
 	Exports write the whole library out as a human-readable Markdown folder tree under
 	<code class="rounded bg-ctp-surface0 px-1">data/exports/</code> — this is the escape hatch that
@@ -19,7 +19,7 @@
 </p>
 
 <form method="POST" action="?/run" use:enhance class="mb-6">
-	<button type="submit" class="rounded-md bg-ctp-mauve px-4 py-2 text-sm font-medium text-ctp-base hover:opacity-90">
+	<button type="submit" class="rounded-md bg-ctp-mauve px-4 py-2 text-sm font-medium text-ctp-crust hover:opacity-90">
 		Run export now
 	</button>
 </form>
@@ -28,7 +28,7 @@
 	<p class="mb-6 text-sm text-ctp-green">Export written to {form.ranAt}</p>
 {/if}
 
-<h2 class="mb-2 text-sm font-semibold uppercase tracking-wide text-ctp-subtext1">Past exports</h2>
+<h2 class="font-mono mb-2 text-sm font-semibold uppercase tracking-wide text-ctp-subtext1">Past exports</h2>
 {#if data.exports.length === 0}
 	<p class="text-ctp-subtext1">No exports yet.</p>
 {:else}

@@ -10,7 +10,7 @@
 </svelte:head>
 
 <div class="mx-auto mt-16 max-w-sm">
-	<h1 class="mb-6 text-xl font-semibold text-ctp-text">Project Library</h1>
+	<h1 class="font-display mb-6 text-xl font-semibold text-ctp-text">Project Library</h1>
 	<form method="POST" use:enhance class="flex flex-col gap-3">
 		<label class="flex flex-col gap-1">
 			<span class="text-sm text-ctp-subtext1">Password</span>
@@ -27,7 +27,7 @@
 		{/if}
 		<button
 			type="submit"
-			class="mt-2 rounded-md bg-ctp-mauve px-3 py-2 font-medium text-ctp-base hover:opacity-90"
+			class="mt-2 rounded-md bg-ctp-mauve px-3 py-2 font-medium text-ctp-crust hover:opacity-90"
 		>
 			Log in
 		</button>

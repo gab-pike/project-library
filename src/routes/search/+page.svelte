@@ -30,7 +30,7 @@
 	<title>Search — Project Library</title>
 </svelte:head>
 
-<h1 class="mb-6 text-2xl font-semibold text-ctp-text">Search</h1>
+<h1 class="font-display mb-6 text-2xl font-semibold text-ctp-text">Search</h1>
 
 <form method="GET" class="mb-6 flex gap-2">
 	<input
@@ -40,7 +40,7 @@
 		placeholder="Search projects, notes, updates, ideas…"
 		class="w-full max-w-xl rounded-md border border-ctp-surface0 bg-ctp-mantle px-3 py-2 text-ctp-text outline-none focus:border-ctp-mauve"
 	/>
-	<button type="submit" class="rounded-md bg-ctp-mauve px-4 py-2 text-sm font-medium text-ctp-base hover:opacity-90">
+	<button type="submit" class="rounded-md bg-ctp-mauve px-4 py-2 text-sm font-medium text-ctp-crust hover:opacity-90">
 		Search
 	</button>
 </form>
@@ -50,7 +50,7 @@
 {/if}
 
 {#each grouped as [type, results] (type)}
-	<h2 class="mb-2 mt-6 text-sm font-semibold uppercase tracking-wide text-ctp-subtext1 first:mt-0">
+	<h2 class="font-mono mb-2 mt-6 text-sm font-semibold uppercase tracking-wide text-ctp-subtext1 first:mt-0">
 		{ENTITY_LABELS[type] ?? type}
 	</h2>
 	<ul class="flex flex-col gap-2">

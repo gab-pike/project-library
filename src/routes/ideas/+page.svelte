@@ -9,7 +9,7 @@
 	<title>Ideas — Project Library</title>
 </svelte:head>
 
-<h1 class="mb-6 text-2xl font-semibold text-ctp-text">Idea inbox</h1>
+<h1 class="font-display mb-6 text-2xl font-semibold text-ctp-text">Idea inbox</h1>
 
 <form method="POST" action="?/create" use:enhance class="mb-8 flex max-w-xl flex-col gap-2">
 	<textarea
@@ -22,7 +22,7 @@
 	{#if form?.error?.content}<p class="text-sm text-ctp-red">{form.error.content[0]}</p>{/if}
 	<button
 		type="submit"
-		class="self-start rounded-md bg-ctp-mauve px-3 py-1.5 text-sm font-medium text-ctp-base hover:opacity-90"
+		class="self-start rounded-md bg-ctp-mauve px-3 py-1.5 text-sm font-medium text-ctp-crust hover:opacity-90"
 	>
 		Capture
 	</button>
