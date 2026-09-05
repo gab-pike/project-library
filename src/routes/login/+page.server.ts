@@ -21,6 +21,10 @@ export const actions: Actions = {
 			path: '/',
 			httpOnly: true,
 			sameSite: 'lax',
+			// SvelteKit defaults secure:true in production regardless of actual protocol — browsers
+			// silently drop Secure cookies set over plain HTTP, which breaks direct IP:port access
+			// (no TLS) without ever surfacing an error. Derive it from the real request instead.
+			secure: url.protocol === 'https:',
 			maxAge: 60 * 60 * 24 * 30
 		});
 
