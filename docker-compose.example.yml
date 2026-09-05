@@ -3,16 +3,18 @@ services:
     image: project-library:latest
     container_name: project-library
     restart: unless-stopped
+    # Injects every variable in .env into the container. Listing them individually under
+    # `environment:` as `KEY=${KEY}` only substitutes into THIS file at `compose up` time —
+    # any var you add to .env later without also adding a matching line here would silently
+    # never reach the container. env_file has no such gap: add a var to .env, restart, done.
+    env_file: .env
     ports:
       - '3015:3000'
     volumes:
       - /mnt/Storage/apps/project-library/data:/data
     environment:
+      # Deployment-specific, not a secret — fine to keep here rather than in .env.
       - TZ=America/Chicago
-      - MAX_UPLOAD_MB=500
-      - BODY_SIZE_LIMIT=524288000 # bytes; adapter-node's own cap, must be >= MAX_UPLOAD_MB or uploads 413 before our code sees them
-      - AUTH_PASSWORD_HASH=${AUTH_PASSWORD_HASH}
-      - SESSION_SECRET=${SESSION_SECRET}
     mem_limit: 512m
     healthcheck:
       test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:3000/']
