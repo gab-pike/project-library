@@ -1,11 +1,9 @@
 // src/lib/server/db.ts
 import Database from 'better-sqlite3';
-import { env } from '$env/dynamic/private';
 import path from 'path';
 import fs from 'fs';
 import { runMigrations } from './migrations';
-
-const DATA_DIR = env.DATA_DIR ?? './data';
+import { DATA_DIR } from './env';
 
 let instance: Database.Database | undefined;
 

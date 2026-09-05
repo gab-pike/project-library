@@ -1,10 +1,9 @@
 import fs from 'fs/promises';
 import path from 'path';
 import db from './db';
-import { env } from '$env/dynamic/private';
 import { EXPORTS_DIR, exportTimestamp, runExport } from './export';
+import { DATA_DIR } from './env';
 
-const DATA_DIR = env.DATA_DIR ?? './data';
 const BACKUPS_DIR = path.join(DATA_DIR, 'backups');
 const KEEP_BACKUPS = 14;
 const KEEP_EXPORTS = 2;
