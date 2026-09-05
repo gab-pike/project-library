@@ -4,6 +4,20 @@ import { env } from '$env/dynamic/private';
 const AUTH_PASSWORD_HASH = env.AUTH_PASSWORD_HASH ?? '';
 const SESSION_SECRET = env.SESSION_SECRET ?? '';
 
+// Two footguns that otherwise fail silently as "every login gets Incorrect password" with
+// no clue why: the var left blank, or a plaintext password pasted in where the scrypt
+// 'salt:hash' output belongs. Surface both loudly in the server logs at boot instead.
+if (!/^[0-9a-f]{32}:[0-9a-f]{128}$/i.test(AUTH_PASSWORD_HASH)) {
+	console.warn(
+		'[auth] AUTH_PASSWORD_HASH is missing or not in the expected salt:hash format — ' +
+			'every login will fail. Generate it with the scrypt command in .env.example; ' +
+			'it holds the hash output, never the plaintext password itself.'
+	);
+}
+if (!SESSION_SECRET) {
+	console.warn('[auth] SESSION_SECRET is empty — session cookies will not be verifiable. Set it in .env.');
+}
+
 export const SESSION_COOKIE_NAME = 'session';
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 30; // 30 days
 
